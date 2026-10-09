@@ -11,6 +11,9 @@ import Workout from './models/Workout.js';
 const app = express();
 const port = Number(process.env.PORT ?? 8000);
 const codespaceName = process.env.CODESPACE_NAME;
+const apiBaseUrl = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev`
+  : `http://localhost:${port}`;
 const frontendOrigin = codespaceName
   ? `https://${codespaceName}-5173.app.github.dev`
   : 'http://localhost:5173';
@@ -47,8 +50,5 @@ app.use((error: Error, _request: express.Request, response: express.Response, _n
 });
 
 app.listen(port, () => {
-  const baseUrl = codespaceName
-    ? `https://${codespaceName}-8000.app.github.dev`
-    : `http://localhost:${port}`;
-  console.log(`OctoFit API listening at ${baseUrl}`);
+  console.log(`OctoFit API listening at ${apiBaseUrl}`);
 });
